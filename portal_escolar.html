@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Escolar | E.G.A.G.B.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --azul: #0f4c81;
+            --azul-v: #1565c0;
+            --acento: #f59e0b;
+            --acento2: #10b981;
+            --fondo: #f0f4f8;
+            --fondo2: #e2e8f0;
+            --blanco: #ffffff;
+            --texto: #1a2332;
+            --texto-suave: #64748b;
+            --borde: #cbd5e1;
+            --rojo: #ef4444;
+            --verde: #10b981;
+            --sombra: 0 4px 24px rgba(15,76,129,0.10);
+            --sombra-hover: 0 8px 32px rgba(15,76,129,0.18);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Sora', sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+            min-height: 100vh;
+        }
+
+        /* ===== FONDO DECORATIVO ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(15,76,129,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            background: var(--azul);
+            padding: 0 2rem;
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            height: 68px;
+            box-shadow: 0 4px 20px rgba(15,76,129,0.35);
+        }
+
+        .logo-area {
+            display: flex; align-items: center; gap: 14px;
+        }
+        .escudo {
+            width: 44px; height: 44px;
+            background: var(--acento);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.62rem; font-weight: 800;
+            color: var(--azul); text-align: center;
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(245,158,11,0.4);
+        }
+        .nombre-escuela {
+            display: flex; flex-direction: column;
+        }
+        .nombre-escuela span:first-child {
+            font-size: 0.7rem; font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase; letter-spacing: 0.08em;
+        }
+        .nombre-escuela span:last-child {
+            font-size: 1rem; font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .nav-tabs {
+            display: flex; gap: 6px; list-style: none;
+        }
+        .nav-tabs li a {
+            display: flex; align-items: center; gap: 8px;
+            padding: 0.55rem 1.2rem;
+            border-radius: 8px;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.88rem; font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1.5px solid transparent;
+        }
+        .nav-tabs li a:hover {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+        }
+        .nav-tabs li a.active {
+            background: var(--acento);
+            color: var(--azul);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .nav-tabs li a .lock-icon {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        /* ===== HERO BANNER ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--azul) 0%, var(--azul-v) 100%);
+            padding: 2.5rem 2rem 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute; right: -60px; bottom: -80px;
+            width: 300px; height: 300px;
+            border: 40px solid rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        .hero-inner {
+            max-width: 1300px; margin: 0 auto;
+            position: relative; z-index: 1;
+        }
+        .hero-inner h1 {
+            font-size: 1.8rem; font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+        .hero-inner p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.92rem;
+        }
+        .hero-chips {
+            display: flex; gap: 10px; margin-top: 1rem; flex-wrap: wrap;
+        }
+        .chip {
+            display: flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.12);
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.78rem; font-weight: 600;
+            color: rgba(255,255,255,0.85);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .chip.gold { background: rgba(245,158,11,0.25); border-color: rgba(245,158,11,0.4); color: #fde68a; }
+        .chip.green { background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.35); color: #6ee7b7; }
+
+        /* ===== MAIN LAYOUT ===== */
+        main { max-width: 1300px; margin: 0 auto; padding: 2rem 1.5rem; position: relative; z-index: 1; }
+
+        .section { display: none; animation: fadeUp 0.35s ease; }
+        .section.active { display: block; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--blanco);
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: var(--sombra);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--borde);
+        }
+        .card-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 1.4rem;
+        }
+        .card-icon {
+            width: 42px; height: 42px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .card-icon.blue { background: #e0eeff; color: var(--azul-v); }
+        .card-icon.amber { background: #fef3c7; color: #d97706; }
+        .card-icon.green { background: #d1fae5; color: #059669; }
+        .card-icon.red { background: #fee2e2; color: #dc2626; }
+        .card-header h2 {
+            font-size: 1.15rem; font-weight: 700; color: var(--texto);
+        }
+        .card-header p {
+            font-size: 0.82rem; color: var(--texto-suave); margin-top: 2px;
+        }
+
+        /* ===== FORM ELEMENTS ===== */
+        .form-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem; margin-bottom: 1.2rem;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label {
+            font-size: 0.8rem; font-weight: 700;
+            color: var(--texto-suave); text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .form-group select,
+        .form-group input[type="text"],
+        .form-group input[type="url"],
+        .form-group input[type="password"] {
+            padding: 0.65rem 0.9rem;
+            border: 1.5px solid var(--borde);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: 'Sora', sans-serif;
+            color: var(--texto);
+            background: #f8fafc;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .form-group select:focus,
+        .form-group input:focus {
+            border-color: var(--azul-v);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(21,101,192,0.12);
+        }
+
+        /* ===== BOTONES ===== */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.88rem; font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-primary { background: var(--azul); color: white; }
+        .btn-primary:hover { background: var(--azul-v); box-shadow: 0 4px 14px rgba(15,76,129,0.3); transform: translateY(-1px); }
+        .btn-success { background: var(--verde); color: white; }
+        .btn-success:hover { background: #059669; transform: translateY(-1px); }
+        .btn-danger { background: var(--rojo); color: white; padding: 0.4rem 0.85rem; font-size: 0.8rem; border-radius: 8px; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-amber { background: var(--acento); color: var(--azul); }
+        .btn-amber:hover { background: #f59e0b; transform: translateY(-1px); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+        /* ===== MATERIA CARD ===== */
+        .materia-card {
+            background: white;
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(15,76,129,0.05);
+            transition: box-shadow 0.2s;
+        }
+        .materia-card:hover { box-shadow: var(--sombra-hover); }
+        .materia-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1.5px solid var(--fondo2);
+        }
+        .materia-nombre {
+            font-size: 1rem; font-weight: 700; color: var(--azul);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .turno-badge {
+            font-size: 0.72rem; font-weight: 700;
+            padding: 0.25rem 0.7rem; border-radius: 999px;
+            text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .turno-m { background: #eff6ff; color: #1d4ed8; }
+        .turno-t { background: #fff7ed; color: #c2410c; }
+
+        .sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media(max-width: 768px) { .sub-grid { grid-template-columns: 1fr; } }
+
+        .sub-box {
+            background: var(--fondo);
+            border: 1px solid var(--fondo2);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .sub-box-title {
+            font-size: 0.78rem; font-weight: 700;
+            color: var(--texto-suave); text-transform: uppercase; letter-spacing: 0.06em;
+            display: flex; align-items: center; gap: 6px;
+            margin-bottom: 0.8rem;
+        }
+
+        /* ===== FILE LIST ===== */
+        .file-list { list-style: none; }
+        .file-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: white;
+            padding: 0.6rem 0.85rem;
+            border: 1px solid var(--borde);
+            border-radius: 8px;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+        }
+        .file-item span { display: flex; align-items: center; gap: 6px; color: var(--texto); }
+        .file-link {
+            display: inline-flex; align-items: center; gap: 5px;
+            color: var(--azul-v); font-weight: 700; text-decoration: none;
+            font-size: 0.82rem;
+            padding: 0.25rem 0.7rem;
+            background: #eff6ff;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .file-link:hover { background: #dbeafe; }
+        .empty-msg {
+            font-size: 0.82rem; color: var(--texto-suave);
+            text-align: center; padding: 0.8rem;
+            background: white; border-radius: 8px;
+            border: 1px dashed var(--borde);
+        }
+
+        /* ===== UPLOAD ZONE ===== */
+        .upload-zone {
+            border: 2px dashed var(--borde);
+            background: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            margin-top: 0.5rem;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .upload-zone:hover { border-color: var(--azul-v); background: #f0f7ff; }
+        .upload-zone input {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            opacity:0; cursor:pointer;
+        }
+        .upload-zone i { color: var(--texto-suave); font-size: 1.3rem; }
+        .upload-zone span { font-size: 0.78rem; display:block; color: var(--texto-suave); margin-top: 4px; }
+
+        /* ===== TABLA GESTIÓN ===== */
+        .tabla-gestion {
+            width: 100%; border-collapse: collapse;
+            font-size: 0.86rem;
+        }
+        .tabla-gestion th {
+            background: var(--fondo);
+            padding: 0.7rem 1rem;
+            text-align: left;
+            color: var(--texto-suave);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-bottom: 2px solid var(--borde);
+        }
+        .tabla-gestion td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--fondo2);
+            color: var(--texto);
+            vertical-align: middle;
+        }
+        .tabla-gestion tr:last-child td { border-bottom: none; }
+        .tabla-gestion tr:hover td { background: #f8fafc; }
+        .tabla-wrapper { overflow-x: auto; border-radius: 10px; border: 1px solid var(--borde); }
+
+        /* ===== MODAL CONTRASEÑA ===== */
+        #overlay-password {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            animation: fadeIn2 0.25s ease;
+        }
+        @keyframes fadeIn2 { from { opacity:0; } to { opacity:1; } }
+        .modal-pass {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            width: 100%; max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+        @keyframes slideUp { from { transform:translateY(30px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+        .modal-pass .icono-lock {
+            width: 72px; height: 72px; border-radius: 18px;
+            background: linear-gradient(135deg, var(--azul), var(--azul-v));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; color: white; margin: 0 auto 1.2rem;
+            box-shadow: 0 8px 20px rgba(15,76,129,0.3);
+        }
+        .modal-pass h2 { font-size: 1.3rem; font-weight: 800; color: var(--texto); margin-bottom: 0.3rem; }
+        .modal-pass p { font-size: 0.85rem; color: var(--texto-suave); margin-bottom: 1.5rem; }
+        .pass-input-wrap { position: relative; margin-bottom: 1rem; }
+        .pass-input-wrap input {
+            width: 100%;
+            padding: 0.9rem 3rem 0.9rem 1rem;
+            border: 2px solid var(--borde);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center; letter-spacing: 0.2em;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .pass-input-wrap input:focus { border-color: var(--azul-v); }
+        .pass-input-wrap input.error-input { border-color: var(--rojo); animation: shake 0.35s ease; }
+        @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+        .toggle-pass {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer;
+            color: var(--texto-suave); font-size: 1rem;
+        }
+        .error-msg {
+            font-size: 0.82rem; color: var(--rojo); margin-bottom: 0.8rem;
+            display: flex; align-items: center; justify-content: center; gap: 5px;
+            min-height: 20px;
+        }
+        .btn-entrar {
+            width: 100%; padding: 0.85rem;
+            background: var(--azul);
+            color: white; border: none; border-radius: 12px;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-entrar:hover { background: var(--azul-v); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(15,76,129,0.3); }
+        .btn-cancelar-pass {
+            margin-top: 0.75rem;
+            background: none; border: none;
+            color: var(--texto-suave); font-size: 0.82rem;
+            cursor: pointer; text-decoration: underline;
+            font-family: 'Sora', sans-serif;
+        }
+        .badge-docente {
+            position: absolute; top: 16px; right: 16px;
+            background: #d1fae5; color: #065f46;
+            font-size: 0.7rem; font-weight: 700;
+            padding: 0.2rem 0.6rem; border-radius: 999px;
+            display: none;
+        }
+
+        /* ===== ALERT BANNER ===== */
+        .alert-docente {
+            display: flex; align-items: center; gap: 12px;
+            background: #f0fdf4; border: 1.5px solid #bbf7d0;
+            color: #065f46; border-radius: 12px;
+            padding: 0.85rem 1.1rem; margin-bottom: 1.2rem;
+            font-size: 0.87rem; font-weight: 600;
+        }
+        .alert-docente i { font-size: 1.1rem; color: #16a34a; }
+
+        /* ===== FOOTER BARRA ===== */
+        .session-bar {
+            background: var(--azul);
+            padding: 0.5rem 2rem;
+            display: none; justify-content: flex-end; align-items: center; gap: 10px;
+            color: rgba(255,255,255,0.8); font-size: 0.8rem;
+        }
+        .session-bar.visible { display: flex; }
+        .session-bar button {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+            color: white; padding: 0.3rem 0.8rem; border-radius: 6px;
+            font-size: 0.78rem; font-weight: 600; cursor: pointer;
+            font-family: 'Sora', sans-serif; transition: background 0.2s;
+        }
+        .session-bar button:hover { background: rgba(255,255,255,0.25); }
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width: 640px) {
+            nav { padding: 0 1rem; }
+            .nombre-escuela span:last-child { font-size: 0.82rem; }
+            main { padding: 1rem; }
+            .card { padding: 1.2rem; }
+            .nav-tabs li a span.txt { display: none; }
+            .hero { padding: 1.5rem 1rem; }
+            .hero-inner h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA DE SESIÓN DOCENTE -->
+<div class="session-bar" id="session-bar">
+    <i class="fas fa-shield-alt"></i>
+    <span>Sesión docente activa</span>
+    <button onclick="cerrarSesionDocente()"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+</div>
+
+<!-- NAV -->
+<nav>
+    <div class="logo-area">
+        <div class="escudo">ESC.<br>A.G.B.</div>
+        <div class="nombre-escuela">
+            <span>Portal Escolar</span>
+            <span>E.G. Antonio Glez. Balcarce</span>
+        </div>
+    </div>
+    <ul class="nav-tabs">
+        <li><a onclick="showSec('alumno')" id="link-alumno" class="active">
+            <i class="fas fa-graduation-cap"></i>
+            <span class="txt">Portal Alumnos</span>
+        </a></li>
+        <li><a onclick="pedirPasswordDocente()" id="link-docente">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span class="txt">Espacio Docente</span>
+            <i class="fas fa-lock lock-icon" id="lock-icon-nav"></i>
+        </a></li>
+    </ul>
+</nav>
+
+<!-- MODAL CONTRASEÑA -->
+<div id="overlay-password" style="display:none;">
+    <div class="modal-pass">
+        <span class="badge-docente" id="badge-autorizado">✓ Autorizado</span>
+        <div class="icono-lock"><i class="fas fa-lock"></i></div>
+        <h2>Espacio Docente</h2>
+        <p>Ingresá tu contraseña para acceder al panel de profesores</p>
+        <div class="pass-input-wrap">
+            <input type="password" id="input-password" placeholder="••••••••"
+                   onkeydown="if(event.key==='Enter') verificarPassword()">
+            <button class="toggle-pass" onclick="toggleVerPass()" type="button" tabindex="-1">
+                <i class="fas fa-eye" id="ico-ojo"></i>
+            </button>
+        </div>
+        <p class="error-msg" id="error-pass"></p>
+        <button class="btn-entrar" onclick="verificarPassword()">
+            <i class="fas fa-unlock-alt"></i>&nbsp; Ingresar
+        </button>
+        <br>
+        <button class="btn-cancelar-pass" onclick="cerrarModal()">Cancelar</button>
+    </div>
+</div>
+
+<!-- HERO BANNER -->
+<div class="hero" id="hero-alumno">
+    <div class="hero-inner">
+        <h1><i class="fas fa-book-open" style="opacity:0.8; margin-right:8px;"></i>Portal Educativo</h1>
+        <p>Accedé a los materiales, actividades y contenidos de tu curso</p>
+        <div class="hero-chips">
+            <span class="chip"><i class="fas fa-sun"></i> Turno Mañana</span>
+            <span class="chip"><i class="fas fa-moon"></i> Turno Tarde</span>
+            <span class="chip gold"><i class="fas fa-star"></i> Comunicación</span>
+            <span class="chip green"><i class="fas fa-map-marker-alt"></i> Turismo</span>
+        </div>
+    </div>
+</div>
+<div class="hero" id="hero-docente" style="display:none; background: linear-gradient(135deg, #064e3b, #065f46);">
+    <div class="hero-inner">
+        <h1><i class="fas fa-chalkboard-teacher" style="opacity:0.8; margin-right:8px;"></i>Panel Docente</h1>
+        <p>Cargá actividades y gestioná los contenidos publicados para tus alumnos</p>
+        <div class="hero-chips">
+            <span class="chip green"><i class="fas fa-shield-alt"></i> Acceso verificado</span>
+            <span class="chip"><i class="fas fa-upload"></i> Publicar actividades</span>
+            <span class="chip"><i class="fas fa-tasks"></i> Gestión de archivos</span>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+    <!-- ====== SECCIÓN DOCENTE ====== -->
+    <section id="sec-docente" class="section">
+
+        <div class="alert-docente">
+            <i class="fas fa-check-circle"></i>
+            <span>Sesión iniciada correctamente — Panel exclusivo para profesores de la E.G.A.G.B.</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon blue"><i class="fas fa-upload"></i></div>
+                <div>
+                    <h2>Publicar Nueva Actividad</h2>
+                    <p>Completá el formulario para subir un material descargable para tus alumnos</p>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Curso, División y Turno</label>
+                    <select id="doc-curso" onchange="actualizarMateriasDocente()">
+                        <option value="">Seleccione el curso…</option>
+                        <option value="1-1-M">1° 1° - Turno Mañana</option>
+                        <option value="2-1-M">2° 1° - Turno Mañana</option>
+                        <option value="3-1-M">3° 1° - Turno Mañana</option>
+                        <option value="4-1-M">4° 1° - Turno Mañana (Comunicación)</option>
+                        <option value="5-1-M">5° 1° - Turno Mañana (Comunicación)</option>
+                        <option value="6-1-M">6° 1° - Turno Mañana (Comunicación)</option>
+                        <option value="1-2-T">1° 2° - Turno Tarde</option>
+                        <option value="2-2-T">2° 2° - Turno Tarde</option>
+                        <option value="3-2-T">3° 2° - Turno Tarde</option>
+                        <option value="4-2-T">4° 2° - Turno Tarde (Turismo)</option>
+                        <option value="5-2-T">5° 2° - Turno Tarde (Turismo)</option>
+                        <option value="6-2-T">6° 2° - Turno Tarde (Turismo)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Espacio Curricular (Materia)</label>
+                    <select id="doc-materia" disabled>
+                        <option value="">Primero elija un curso…</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Título del Contenido / Trabajo</label>
+                    <input type="text" id="doc-titulo" placeholder="Ej: Trabajo Práctico N° 1">
+                </div>
+                <div class="form-group">
+                    <label>Enlace del Archivo (Drive / Dropbox)</label>
+                    <input type="url" id="doc-url" placeholder="https://drive.google.com/…">
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="guardarActividadDocente()">
+                <i class="fas fa-plus-circle"></i> Publicar Actividad
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon amber"><i class="fas fa-tasks"></i></div>
+                <div>
+                    <h2>Historial y Control de Publicaciones</h2>
+                    <p>Revisá lo publicado y eliminá actividades si cometiste un error</p>
+                </div>
+            </div>
+            <div id="tabla-gestion-contenedor" class="tabla-wrapper"></div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN ALUMNO ====== -->
+    <section id="sec-alumno" class="section active">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon blue"><i class="fas fa-search"></i></div>
+                <div>
+                    <h2>Buscador de Materias y Contenidos</h2>
+                    <p>Seleccioná tu año y división para ver los materiales disponibles</p>
+                </div>
+            </div>
+            <div class="form-grid" style="grid-template-columns: 1fr 1fr; max-width: 600px;">
+                <div class="form-group">
+                    <label>Seleccioná tu Año y División</label>
+                    <select id="al-curso" onchange="renderMateriasAlumno()">
+                        <option value="">— Elegí tu curso —</option>
+                        <option value="1-1-M">1° 1° - Turno Mañana</option>
+                        <option value="2-1-M">2° 1° - Turno Mañana</option>
+                        <option value="3-1-M">3° 1° - Turno Mañana</option>
+                        <option value="4-1-M">4° 1° - Turno Mañana (Comunicación)</option>
+                        <option value="5-1-M">5° 1° - Turno Mañana (Comunicación)</option>
+                        <option value="6-1-M">6° 1° - Turno Mañana (Comunicación)</option>
+                        <option value="1-2-T">1° 2° - Turno Tarde</option>
+                        <option value="2-2-T">2° 2° - Turno Tarde</option>
+                        <option value="3-2-T">3° 2° - Turno Tarde</option>
+                        <option value="4-2-T">4° 2° - Turno Tarde (Turismo)</option>
+                        <option value="5-2-T">5° 2° - Turno Tarde (Turismo)</option>
+                        <option value="6-2-T">6° 2° - Turno Tarde (Turismo)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="contenedor-materias-alumno"></div>
+    </section>
+
+</main>
+
+<script>
+    // ============ CONTRASEÑA ============
+    const CLAVE_DOCENTE = "Balcarce2025";
+    let docenteAutenticado = false;
+
+    function pedirPasswordDocente() {
+        if (docenteAutenticado) { showSec('docente'); return; }
+        document.getElementById('overlay-password').style.display = 'flex';
+        document.getElementById('input-password').value = '';
+        document.getElementById('error-pass').textContent = '';
+        document.getElementById('input-password').classList.remove('error-input');
+        setTimeout(() => document.getElementById('input-password').focus(), 100);
+    }
+
+    function cerrarModal() {
+        document.getElementById('overlay-password').style.display = 'none';
+    }
+
+    function toggleVerPass() {
+        const inp = document.getElementById('input-password');
+        const ico = document.getElementById('ico-ojo');
+        if (inp.type === 'password') {
+            inp.type = 'text';
+            ico.className = 'fas fa-eye-slash';
+        } else {
+            inp.type = 'password';
+            ico.className = 'fas fa-eye';
+        }
+    }
+
+    function verificarPassword() {
+        const val = document.getElementById('input-password').value;
+        const errMsg = document.getElementById('error-pass');
+        const inp = document.getElementById('input-password');
+        if (val === CLAVE_DOCENTE) {
+            docenteAutenticado = true;
+            document.getElementById('overlay-password').style.display = 'none';
+            document.getElementById('session-bar').classList.add('visible');
+            document.getElementById('lock-icon-nav').className = 'fas fa-unlock lock-icon';
+            showSec('docente');
+        } else {
+            errMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Contraseña incorrecta. Intentá nuevamente.';
+            inp.classList.add('error-input');
+            inp.value = '';
+            setTimeout(() => inp.classList.remove('error-input'), 500);
+        }
+    }
+
+    function cerrarSesionDocente() {
+        docenteAutenticado = false;
+        document.getElementById('session-bar').classList.remove('visible');
+        document.getElementById('lock-icon-nav').className = 'fas fa-lock lock-icon';
+        showSec('alumno');
+    }
+
+    // ============ NAVEGACIÓN ============
+    function showSec(sec) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-tabs a').forEach(a => a.classList.remove('active'));
+        document.getElementById('sec-' + sec).classList.add('active');
+        document.getElementById('link-' + sec).classList.add('active');
+        document.getElementById('hero-alumno').style.display = sec === 'alumno' ? '' : 'none';
+        document.getElementById('hero-docente').style.display = sec === 'docente' ? '' : 'none';
+        if (sec === 'alumno') renderMateriasAlumno();
+        if (sec === 'docente') renderTablaGestionDocente();
+    }
+
+    // ============ CURRÍCULUM ============
+    const estructuraCurricular = {
+        "1-1-M": { texto: "1° 1° - Turno Mañana", turno: "Mañana", materias: ["Historia", "Matemática", "Lengua", "Geografía", "Biología", "Ad. en el Mundo Actual", "Ed. Física Mujeres", "Ed. Física Varones", "Ed. Art. Música", "Tecnología", "Leng. Ext. Inglés", "Form. Ética y Ciudadana"] },
+        "2-1-M": { texto: "2° 1° - Turno Mañana", turno: "Mañana", materias: ["Ed. Art. Teatro", "Matemática", "Física", "Biología", "Geografía", "Tecnología", "Biología y Medio Ambiente", "Historia", "Leng. Ext. Inglés", "Lengua", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "3-1-M": { texto: "3° 1° - Turno Mañana", turno: "Mañana", materias: ["Matemática", "Form. Ética y Ciudadana", "Química", "Geografía", "Lengua", "Tecnología", "Biología", "Artes Visuales", "Orientación y Tutoría", "Leng. Ext. Inglés", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "4-1-M": { texto: "4° 1° - Turno Mañana", turno: "Mañana", materias: ["Lengua y Literatura", "Marketing Publicidad y Propaganda", "Leng. Ext. Inglés", "Economía", "Geografía", "Int. a la Comunicación", "Historia", "Matemática", "Química", "Física", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "5-1-M": { texto: "5° 1° - Turno Mañana", turno: "Mañana", materias: ["Lengua y Literatura", "Leng. Ext. Inglés", "Biología", "Historia", "Matemática", "Psicología", "Com. Com. y Educativa", "Geografía", "Com. Cult. y Sociedad", "Ética y Derecho a la Comunicación", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "6-1-M": { texto: "6° 1° - Turno Mañana", turno: "Mañana", materias: ["Prod. Radiofónica", "Leng. y Literatura", "Inv. y Comunicación", "Comunicación Institucional", "Proyecto Tecnológico", "Lenguaje Multimedial", "Construcción Ética", "Leng. Ext. Inglés", "Ed. Art. Danza", "Matemática", "Filosofía", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "1-2-T": { texto: "1° 2° - Turno Tarde", turno: "Tarde", materias: ["Historia", "Matemática", "Lengua", "Geografía", "Biología", "Ad. en el Mundo Actual", "Ed. Física Mujeres", "Ed. Física Varones", "Ed. Art. Música", "Tecnología", "Leng. Ext. Inglés", "Form. Ética y Ciudadana"] },
+        "2-2-T": { texto: "2° 2° - Turno Tarde", turno: "Tarde", materias: ["Ed. Art. Teatro", "Matemática", "Física", "Biología", "Geografía", "Tecnología", "Biología y Medio Ambiente", "Historia", "Leng. Ext. Inglés", "Lengua", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "3-2-T": { texto: "3° 2° - Turno Tarde", turno: "Tarde", materias: ["Matemática", "Form. Ética y Ciudadana", "Química", "Geografía", "Lengua", "Tecnología", "Biología", "Artes Visuales", "Orientación y Tutoría", "Leng. Ext. Inglés", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "4-2-T": { texto: "4° 2° - Turno Tarde", turno: "Tarde", materias: ["Matemática", "Teoría Gral. del Turismo", "Leng. Ext. Inglés", "Historia", "Economía", "Lengua", "Física", "Química", "Geografía", "Espacio Turístico", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "5-2-T": { texto: "5° 2° - Turno Tarde", turno: "Tarde", materias: ["Leng. Ext. Inglés", "Matemática", "Geografía", "Psicología", "Biología", "Prom. Turística", "Patrimonio Turístico", "Teoría y Práct. de los Serv. Turísticos", "Ed. Física Mujeres", "Ed. Física Varones"] },
+        "6-2-T": { texto: "6° 2° - Turno Tarde", turno: "Tarde", materias: ["Ed. Art. Danza", "Matemática", "Leng. Ext. Inglés", "Construcción Ética", "Turismo Sustentable", "Filosofía", "Nuevas Modalidades", "Proyecto Tecnológico", "Lengua", "Francés", "Proyecto Turístico", "Ed. Física Mujeres", "Ed. Física Varones"] }
+    };
+
+    let DB_ACTIVIDADES = JSON.parse(localStorage.getItem('db_actividades')) || {};
+
+    // ============ DOCENTE ============
+    function actualizarMateriasDocente() {
+        const cur = document.getElementById('doc-curso').value;
+        const sel = document.getElementById('doc-materia');
+        sel.innerHTML = '';
+        if (!cur) { sel.disabled = true; sel.innerHTML = '<option>Primero elija un curso…</option>'; return; }
+        sel.disabled = false;
+        estructuraCurricular[cur].materias.forEach(m => {
+            const o = document.createElement('option');
+            o.value = m; o.innerText = m;
+            sel.appendChild(o);
+        });
+    }
+
+    function guardarActividadDocente() {
+        const curso = document.getElementById('doc-curso').value;
+        const materia = document.getElementById('doc-materia').value;
+        const titulo = document.getElementById('doc-titulo').value.trim();
+        const url = document.getElementById('doc-url').value.trim();
+        if (!curso || !materia || !titulo || !url) { alert("Completá todos los campos."); return; }
+        const clave = `${curso}_${materia}`;
+        if (!DB_ACTIVIDADES[clave]) DB_ACTIVIDADES[clave] = [];
+        DB_ACTIVIDADES[clave].push({ id: 'ACT-' + Date.now(), titulo, url });
+        localStorage.setItem('db_actividades', JSON.stringify(DB_ACTIVIDADES));
+        alert(`✅ Publicado con éxito en ${materia}!`);
+        document.getElementById('doc-titulo').value = '';
+        document.getElementById('doc-url').value = '';
+        renderTablaGestionDocente();
+    }
+
+    function renderTablaGestionDocente() {
+        const cont = document.getElementById('tabla-gestion-contenedor');
+        let total = 0, rows = '';
+        for (const clave in DB_ACTIVIDADES) {
+            if (DB_ACTIVIDADES[clave].length > 0) {
+                const [curso] = clave.split('_');
+                const materia = clave.substring(clave.indexOf('_') + 1);
+                const nombreCurso = estructuraCurricular[curso] ? estructuraCurricular[curso].texto : curso;
+                DB_ACTIVIDADES[clave].forEach(act => {
+                    total++;
+                    rows += `<tr>
+                        <td><strong>${nombreCurso}</strong></td>
+                        <td>${materia}</td>
+                        <td>${act.titulo}</td>
+                        <td><button class="btn btn-danger" onclick="borrarActividad('${clave}','${act.id}')"><i class="fas fa-trash-alt"></i> Borrar</button></td>
+                    </tr>`;
+                });
+            }
+        }
+        if (total === 0) {
+            cont.innerHTML = `<p style="color:var(--texto-suave);text-align:center;padding:2rem;font-size:0.9rem;"><i class="fas fa-inbox" style="display:block;font-size:2rem;margin-bottom:0.5rem;opacity:0.3;"></i>No hay actividades publicadas.</p>`;
+        } else {
+            cont.innerHTML = `<table class="tabla-gestion"><thead><tr><th>Curso / División</th><th>Materia</th><th>Título</th><th>Acción</th></tr></thead><tbody>${rows}</tbody></table>`;
+        }
+    }
+
+    function borrarActividad(clave, id) {
+        if (confirm("¿Eliminar esta actividad? Los alumnos ya no la verán.")) {
+            DB_ACTIVIDADES[clave] = DB_ACTIVIDADES[clave].filter(a => a.id !== id);
+            if (DB_ACTIVIDADES[clave].length === 0) delete DB_ACTIVIDADES[clave];
+            localStorage.setItem('db_actividades', JSON.stringify(DB_ACTIVIDADES));
+            renderTablaGestionDocente();
+        }
+    }
+
+    // ============ ALUMNO ============
+    function renderMateriasAlumno() {
+        const curso = document.getElementById('al-curso').value;
+        const cont = document.getElementById('contenedor-materias-alumno');
+        cont.innerHTML = '';
+        if (!curso) return;
+        const datos = estructuraCurricular[curso];
+        const turnoClass = datos.turno === "Mañana" ? 'turno-m' : 'turno-t';
+        datos.materias.forEach(mat => {
+            const clave = `${curso}_${mat}`;
+            const actividades = DB_ACTIVIDADES[clave] || [];
+            let htmlActs = `<div class="empty-msg"><i class="fas fa-folder-open" style="margin-right:5px;opacity:0.5;"></i>Sin archivos cargados aún</div>`;
+            if (actividades.length > 0) {
+                htmlActs = '<ul class="file-list">';
+                actividades.forEach(a => {
+                    htmlActs += `<li class="file-item">
+                        <span><i class="far fa-file-alt" style="color:var(--azul-v);"></i> ${a.titulo}</span>
+                        <a href="${a.url}" target="_blank" class="file-link"><i class="fas fa-download"></i> Descargar</a>
+                    </li>`;
+                });
+                htmlActs += '</ul>';
+            }
+            const div = document.createElement('div');
+            div.className = 'materia-card';
+            div.innerHTML = `
+                <div class="materia-header">
+                    <span class="materia-nombre"><i class="fas fa-book" style="font-size:0.85rem;opacity:0.6;"></i> ${mat}</span>
+                    <span class="turno-badge ${turnoClass}">Turno ${datos.turno}</span>
+                </div>
+                <div class="sub-grid">
+                    <div class="sub-box">
+                        <div class="sub-box-title"><i class="fas fa-folder-open"></i> Materiales</div>
+                        ${htmlActs}
+                    </div>
+                    <div class="sub-box">
+                        <div class="sub-box-title"><i class="fas fa-paper-plane"></i> Entrega de Trabajo</div>
+                        <div class="form-group" style="margin-bottom:0.5rem;">
+                            <input type="text" id="name-${clave}" placeholder="Tu nombre completo" style="font-size:0.83rem;padding:0.5rem 0.7rem;">
+                        </div>
+                        <div class="upload-zone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span id="txt-file-${clave}">Arrastrar o seleccionar (.zip, .rar, .pdf)</span>
+                            <input type="file" accept=".zip,.rar,.pdf" onchange="archivoSeleccionado('${clave}', this)">
+                        </div>
+                        <button class="btn btn-success" style="width:100%;margin-top:0.6rem;justify-content:center;" onclick="ejecutarEntregaAlumno('${clave}')">
+                            <i class="fas fa-paper-plane"></i> Enviar al Docente
+                        </button>
+                        <div id="msg-${clave}" style="margin-top:0.5rem;font-size:0.8rem;font-weight:bold;display:none;"></div>
+                    </div>
+                </div>`;
+            cont.appendChild(div);
+        });
+    }
+
+    function archivoSeleccionado(clave, input) {
+        const txt = document.getElementById(`txt-file-${clave}`);
+        if (input.files.length > 0) {
+            txt.innerText = "✓ " + input.files[0].name;
+            txt.style.color = "var(--verde)";
+        }
+    }
+
+    function ejecutarEntregaAlumno(clave) {
+        const nombre = document.getElementById(`name-${clave}`).value.trim();
+        const txt = document.getElementById(`txt-file-${clave}`).innerText;
+        const msg = document.getElementById(`msg-${clave}`);
+        if (!nombre || txt.includes("Arrastrar")) { alert("Ingresá tu nombre y adjuntá un archivo."); return; }
+        msg.style.display = "block"; msg.style.color = "var(--texto-suave)"; msg.innerText = "Subiendo…";
+        setTimeout(() => {
+            const cod = 'RECIBIDO-' + Math.random().toString(36).substr(2, 7).toUpperCase();
+            msg.style.color = "var(--verde)";
+            msg.innerHTML = `✅ ¡Entregado! Código: <span style="font-family:'JetBrains Mono';background:#f0fdf4;padding:1px 6px;border-radius:4px;border:1px solid #bbf7d0;">${cod}</span>`;
+            document.getElementById(`name-${clave}`).value = '';
+            document.getElementById(`txt-file-${clave}`).innerText = "Arrastrar o seleccionar (.zip, .rar, .pdf)";
+            document.getElementById(`txt-file-${clave}`).style.color = "";
+        }, 1200);
+    }
+
+    window.onload = () => {
+        renderMateriasAlumno();
+        document.getElementById('hero-docente').style.display = 'none';
+    };
+</script>
+</body>
+</html>
