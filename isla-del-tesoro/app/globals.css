@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "lenis/dist/lenis.css";
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: #05080d;
+  overflow-x: clip;
+}
+
+body {
+  background-color: #05080d;
+  background-image:
+    radial-gradient(70% 50% at 50% 0%, rgba(217, 176, 100, 0.07), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.69 0 0 0 0 0.4 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color: #efe3c8;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: #d9b064;
+  color: #05080d;
+}
+
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+
+@layer utilities {
+  .text-gold {
+    background: linear-gradient(180deg, #fbeec0 0%, #e2bb6c 45%, #a8742f 55%, #f3dd9f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* room for capital accents (Í, É, Ó) above tight display leading */
+    padding-top: 0.14em;
+    margin-top: -0.14em;
+  }
+  .text-stroke-gold {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(217, 176, 100, 0.55);
+  }
+  .glow-gold {
+    filter: drop-shadow(0 0 28px rgba(217, 176, 100, 0.35));
+  }
+}
+
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -5%); }
+  60% { transform: translate(-2%, 6%); }
+  80% { transform: translate(5%, -2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* film-gate flicker on video layers */
+.flicker {
+  animation: flicker 4s infinite steps(1);
+}
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  47% { opacity: 0.96; }
+  48% { opacity: 1; }
+  73% { opacity: 0.93; }
+  74% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain, .flicker { animation: none; }
+}
